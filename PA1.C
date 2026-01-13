@@ -88,29 +88,30 @@ int main(void)
     return 0;
 }
 
-/* Initializes the list */
+/// Initializes a given list.
+/// @param list Represents the list user wishes to initialize.
+///
 void initList(IntList* list)
 {
     list->size = 0;
 }
 
-/* Inserts a value at the end of the list */
+/// Inserts a value at the end of the list
+/// @param list Represents pointer to the start of the list being modified.
+/// @param value Represents the value user wishes to append to the end of the list.
+/// @return Integer value representing the number of elements in the list.
+///
 int insertEnd(IntList* list, int value)
 {
-    /* TODO:
-    * 1. Check if list is full
-    * 2. Insert value at the end
-    * 3. Update size
-    */
-
+    // checks if the list is full
     if (list->size >= MAX_SIZE)
     {
         return -1;
     }
 
-    list->data[list->size] = value;
-    list->size++;
-    printf("List size: %d", list->size);
+    list->data[list->size] = value; // adding the value to the end of the list
+    list->size++; // increasing list size
+    printf("List size: %d", list->size); // print to make sure it's working
     return list->size;
 }
 
