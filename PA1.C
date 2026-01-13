@@ -147,13 +147,25 @@ int search(const IntList* list, int value)
     return -1; /* placeholder */
 }
 
-/* Prints all elements in the list */
+/// Prints all the elements in the list.
+/// @param list Represents the list a user wishes to print.
+/// @remark Recognizes empty lists based on size.
 void printList(const IntList* list)
 {
     /* TODO:
     * Print elements in order
     * Handle empty list
     */
+    if (list->size <= 0)
+    {
+        printf("List is empty, nothing to display.");
+        return;
+    }
+
+    for (int i = 0; i < list->size; i++)
+    {
+        printf("Item #%d: %d \n", i+1, list->data[i]);
+    }
 }
 
 /* Prints the menu options */
