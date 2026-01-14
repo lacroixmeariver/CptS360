@@ -94,6 +94,12 @@ int main(void)
 void initList(IntList* list)
 {
     list->size = 0;
+
+    // initializing with default variable to catch invalid entries
+    for (int i  = 0; i < MAX_SIZE; i++)
+    {
+        list->data[i] = NULL;
+    }
 }
 
 /// Inserts a value at the end of the list
@@ -109,13 +115,18 @@ int insertEnd(IntList* list, int value)
         return -1;
     }
 
+    //TODO: Account for list with randomly indexed variables
     list->data[list->size] = value; // adding the value to the end of the list
     list->size++; // increasing list size
     printf("List size: %d", list->size); // print to make sure it's working
     return list->size;
 }
 
-/* Inserts a value at a specific index */
+/// Inserts a value at a specific index
+/// @param list Represents the list being modified.
+/// @param index Represents the index position a value is being assigned to.
+/// @param value Represents the value being assigned into a specific index.
+/// @return Integer value representing the number of elements in the list.
 int insertAt(IntList* list, int index, int value)
 {
     /* TODO:
@@ -124,7 +135,25 @@ int insertAt(IntList* list, int index, int value)
     * 3. Insert value
     * 4. Update size
     */
-    return -1; /* placeholder */
+    if (index >= MAX_SIZE - 1 || index < 0)
+    {
+        return -1;
+    }
+
+    // assuming user knows indexing is 0 based
+    int tempCurrent = list->data[index];
+    list->data[index] = value;
+
+    for (int i = index + 1; i < MAX_SIZE; i++)
+    {
+        int tempNext = list->data[i];
+        list->data[i] = tempCurrent;
+        tempCurrent = tempNext;
+    }
+
+    list->size += 1;
+    printf("List size: %d", list->size);
+    return list->size;
 }
 
 /* Removes the element at a specific index */
@@ -162,8 +191,13 @@ void printList(const IntList* list)
         return;
     }
 
-    for (int i = 0; i < list->size; i++)
+    for (int i = 0; i < MAX_SIZE; i++)
     {
+        // identifying valid entries
+        if (list->data[i] == NULL)
+        {
+            continue;
+        }
         printf("Item #%d: %d \n", i+1, list->data[i]);
     }
 }
