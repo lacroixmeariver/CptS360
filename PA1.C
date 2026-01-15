@@ -94,12 +94,6 @@ int main(void)
 void initList(IntList* list)
 {
     list->size = 0;
-
-    // initializing with default variable to catch invalid entries
-    for (int i  = 0; i < MAX_SIZE; i++)
-    {
-        list->data[i] = NULL;
-    }
 }
 
 /// Inserts a value at the end of the list
@@ -115,10 +109,8 @@ int insertEnd(IntList* list, int value)
         return -1;
     }
 
-    //TODO: Account for list with randomly indexed variables
     list->data[list->size] = value; // adding the value to the end of the list
     list->size++; // increasing list size
-    printf("List size: %d", list->size); // print to make sure it's working
     return list->size;
 }
 
@@ -129,13 +121,7 @@ int insertEnd(IntList* list, int value)
 /// @return Integer value representing the number of elements in the list.
 int insertAt(IntList* list, int index, int value)
 {
-    /* TODO:
-    * 1. Validate index
-    * 2. Shift elements to the right
-    * 3. Insert value
-    * 4. Update size
-    */
-    if (index >= MAX_SIZE - 1 || index < 0)
+    if (list->size >= MAX_SIZE || index > list->size || index < 0)
     {
         return -1;
     }
@@ -144,36 +130,55 @@ int insertAt(IntList* list, int index, int value)
     int tempCurrent = list->data[index];
     list->data[index] = value;
 
-    for (int i = index + 1; i < MAX_SIZE; i++)
+    for (int i = index + 1; i < list->size; i++)
     {
         int tempNext = list->data[i];
         list->data[i] = tempCurrent;
         tempCurrent = tempNext;
     }
+    list->data[list->size] = tempCurrent;
 
-    list->size += 1;
-    printf("List size: %d", list->size);
+    list->size++;
     return list->size;
 }
 
-/* Removes the element at a specific index */
+/// Removes the element at a specific index.
+/// @param list Represents the list being modified.
+/// @param index Represents the index with value being removed.
+/// @return Integer value representing the number of elements in the list.
 int removeAt(IntList* list, int index)
 {
-    /* TODO:
-    * 1. Validate index
-    * 2. Shift elements to the left
-    * 3. Update size
-    */
-    return -1; /* placeholder */
+    if (index >= list->size || index < 0)
+    {
+        return -1;
+    }
+
+    for (int i = index; i < list->size - 1; i++)
+    {
+        int tempNext = list->data[i + 1];
+        list->data[i] = tempNext;
+    }
+
+    list->size--;
+    return list->size;
+
 }
 
-/* Searches for a value and returns its index or -1 */
+/// Searches for a value and returns its index or -1
+/// @param list Represents the list being searched.
+/// @param value Represents the target value.
+/// @return Integer value representing the index containing target value.
 int search(const IntList* list, int value)
 {
-    /* TODO:
-    * Perform a linear search
-    */
-    return -1; /* placeholder */
+    for (int i = 0; i < list->size; i++)
+    {
+        if (list->data[i] == value)
+        {
+            return i;
+        }
+    }
+
+    return -1;
 }
 
 /// Prints all the elements in the list.
@@ -181,23 +186,14 @@ int search(const IntList* list, int value)
 /// @remark Recognizes empty lists based on size.
 void printList(const IntList* list)
 {
-    /* TODO:
-    * Print elements in order
-    * Handle empty list
-    */
     if (list->size <= 0)
     {
         printf("List is empty, nothing to display.");
         return;
     }
 
-    for (int i = 0; i < MAX_SIZE; i++)
+    for (int i = 0; i < list->size; i++)
     {
-        // identifying valid entries
-        if (list->data[i] == NULL)
-        {
-            continue;
-        }
         printf("Item #%d: %d \n", i+1, list->data[i]);
     }
 }
