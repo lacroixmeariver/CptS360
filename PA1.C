@@ -10,6 +10,7 @@ typedef struct
 
 /* Function prototypes */
 void initList(IntList* list);
+int getValidInteger();
 int insertEnd(IntList* list, int value);
 int insertAt(IntList* list, int index, int value);
 int removeAt(IntList* list, int index);
@@ -20,7 +21,7 @@ void printMenu(void);
 int main(void)
 {
     IntList list;
-    int choice;
+    int choice = -1;
     int value;
     int index;
     int result;
@@ -29,41 +30,46 @@ int main(void)
     {
         printMenu();
         printf("Enter choice: ");
-        scanf("%d", &choice);
+        choice = getValidInteger();
+
         switch (choice)
         {
         case 1:
             printf("Enter value to insert at end: ");
-            scanf("%d", &value);
+            value = getValidInteger();
             result = insertEnd(&list, value);
             if (result == -1)
             {
                 printf("List is full.\n");
             }
+            printf("%d successfully added to end of list.\n", value);
             break;
         case 2:
             printf("Enter index: ");
-            scanf("%d", &index);
+            index = getValidInteger();
             printf("Enter value: ");
-            scanf("%d", &value);
+            value = getValidInteger();
             result = insertAt(&list, index, value);
             if (result == -1)
             {
                 printf("Invalid index or list is full.\n");
             }
+            printf("%d successfully added to index: %d.\n", value, index);
             break;
         case 3:
             printf("Enter index to remove: ");
-            scanf("%d", &index);
+            index = getValidInteger();
             result = removeAt(&list, index);
             if (result == -1)
             {
                 printf("Invalid index.\n");
             }
+            printf("Value at index: %d successfully removed.\n", index);
             break;
         case 4:
             printf("Enter value to search: ");
-            scanf("%d", &value);
+            value = getValidInteger();
+
             result = search(&list, value);
             if (result == -1)
             {
@@ -81,12 +87,13 @@ int main(void)
             printf("Exiting program.\n");
             break;
         default:
-            printf("Invalid choice.\n");
+            printf("Please select a valid menu option.\n");
         }
     }
     while (choice != 0);
     return 0;
 }
+
 
 /// Initializes a given list.
 /// @param list Represents the list user wishes to initialize.
@@ -95,6 +102,25 @@ void initList(IntList* list)
 {
     list->size = 0;
 }
+
+/// Validates user input by verifying stdin integer assignment using scanf().
+/// @return Integer value representing user choice or input.
+int getValidInteger()
+{
+    int numEntered;
+
+    while (scanf("%d", &numEntered) != 1)
+    {
+        while (getchar() != '\n')
+        {
+            continue;
+        }
+        printf("Invalid input, try again: ");
+    }
+    return numEntered;
+}
+
+
 
 /// Inserts a value at the end of the list
 /// @param list Represents pointer to the start of the list being modified.
@@ -188,7 +214,7 @@ void printList(const IntList* list)
 {
     if (list->size <= 0)
     {
-        printf("List is empty, nothing to display.");
+        printf("List is empty, nothing to display.\n");
         return;
     }
 
