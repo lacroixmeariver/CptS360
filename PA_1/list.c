@@ -42,6 +42,7 @@ int insertAt(IntList* list, int index, int value)
     // assuming user knows indexing is 0 based
     int tempCurrent = list->data[index];
     list->data[index] = value;
+    list->size++;
 
     for (int i = index + 1; i < list->size; i++)
     {
@@ -51,7 +52,6 @@ int insertAt(IntList* list, int index, int value)
     }
     list->data[list->size] = tempCurrent;
 
-    list->size++;
     return list->size;
 }
 
