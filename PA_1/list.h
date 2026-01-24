@@ -11,7 +11,7 @@ typedef struct
 
 /* Function prototypes */
 void initList(IntList* list);
-int getValidInteger();
+int getValidInteger(void);
 int insertEnd(IntList* list, int value);
 int insertAt(IntList* list, int index, int value);
 int removeAt(IntList* list, int index);

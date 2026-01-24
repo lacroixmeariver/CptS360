@@ -13,7 +13,7 @@ int main(void)
     {
         printMenu();
         printf("Enter choice: ");
-        choice = getValidInteger();
+        choice = getValidInteger(); // prevents anything other than an integer from being used
 
         switch (choice)
         {
@@ -25,7 +25,11 @@ int main(void)
             {
                 printf("List is full.\n");
             }
-            printf("%d successfully added to end of list.\n", value);
+            else
+            {
+                printf("%d successfully added to end of list.\n", value);
+            }
+
             break;
         case 2:
             printf("Enter index: ");
@@ -37,7 +41,10 @@ int main(void)
             {
                 printf("Invalid index or list is full.\n");
             }
-            printf("%d successfully added to index: %d.\n", value, index);
+            else
+            {
+                printf("%d successfully added to index: %d.\n", value, index);
+            }
             break;
         case 3:
             printf("Enter index to remove: ");
@@ -47,7 +54,10 @@ int main(void)
             {
                 printf("Invalid index.\n");
             }
-            printf("Value at index: %d successfully removed.\n", index);
+            else
+            {
+                printf("Value at index: %d successfully removed.\n", index);
+            }
             break;
         case 4:
             printf("Enter value to search: ");
@@ -77,9 +87,7 @@ int main(void)
     return 0;
 }
 
-
-
-/* Prints the menu options */
+/// Prints the menu options to the screen.
 void printMenu(void)
 {
     printf("\nMenu:\n");
@@ -93,7 +101,7 @@ void printMenu(void)
 
 /// Validates user input by verifying stdin integer assignment using scanf().
 /// @return Integer value representing user choice or input.
-int getValidInteger()
+int getValidInteger(void)
 {
     int numEntered;
 

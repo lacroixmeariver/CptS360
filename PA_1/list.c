@@ -16,7 +16,6 @@ void initList(IntList* list)
 ///
 int insertEnd(IntList* list, int value)
 {
-    // checks if the list is full
     if (list->size >= MAX_SIZE)
     {
         return -1;
@@ -68,19 +67,18 @@ int removeAt(IntList* list, int index)
 
     for (int i = index; i < list->size - 1; i++)
     {
-        int tempNext = list->data[i + 1];
-        list->data[i] = tempNext;
+        list->data[i] = list->data[i + 1];
     }
 
     list->size--;
     return list->size;
-
 }
 
 /// Searches for a value and returns its index or -1
 /// @param list Represents the list being searched.
 /// @param value Represents the target value.
 /// @return Integer value representing the index containing target value.
+/// @remark If multiple copies of target value exist - returns first instance of target value.
 int search(const IntList* list, int value)
 {
     for (int i = 0; i < list->size; i++)
@@ -107,6 +105,6 @@ void printList(const IntList* list)
 
     for (int i = 0; i < list->size; i++)
     {
-        printf("Item #%d: %d \n", i+1, list->data[i]);
+        printf("Item #%d: %d \n", i + 1, list->data[i]);
     }
 }
