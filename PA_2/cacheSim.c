@@ -1,9 +1,9 @@
 #include "cacheSim.h"
 
-/*
-*
-* Creates and initializes a cache
-*/
+/// Creates and initializes a new cache.
+/// @param cache_size Represents the total cache size in bytes.
+/// @param block_size Represents the total size of stored block.
+/// @return Pointer to newly initialized cache.
 Cache* create_cache(int cache_size, int block_size)
 {
     Cache* cache = (Cache*)malloc(sizeof(Cache));
@@ -19,60 +19,41 @@ Cache* create_cache(int cache_size, int block_size)
         free(cache);
         return NULL;
     }
-    /* TODO: Initialize cache lines (valid bits and tags) */
-    // all start at 0 (I think?)
+
     for (int i = 0; i < cache->num_lines; i++)
     {
-        cache->lines[i].tag = 0;
-        cache->lines[i].valid = 0;
+        cache->lines[i].tag = 0; // set to 0, new cache will be cold/empty
     }
-
 
     return cache;
 }
 
-/*
-* Simulates accessing the cache with a memory address
-* Returns 1 for hit, 0 for miss
-*/
+
+/// Simulates the accessing of a cache using a memory address.
+/// @param cache Represents the cache being accessed.
+/// @param address Represents the address being evaluated.
+/// @return Integer value representing a cache hit (1) or miss (0).
 int access_cache(Cache* cache, unsigned int address)
 {
-    /* TODO:
-    * 1. Compute block address
-    * 2. Compute index
-    * 3. Compute tag
-    * 4. Check for hit or miss
-    * 5. Update cache line on miss
-    */
-
     int block_address = address / cache->block_size;
     int index = block_address % cache->num_lines;
     int tag = block_address / cache->num_lines;
 
-    printf("Address stats for %d: \n"
-           "block address: %d \n"
-           "index: %d \n"
-           "tag: %d \n",
-           address, block_address, index, tag);
-
-    if (cache->lines[block_address].valid)
+    // yes there's data in here and the tag matches target tag
+    if (cache->lines[index].valid == 1 && cache->lines[index].tag == tag)
     {
-        //printf("Searching... hit! \n");
-        return 1;
-    }
-    else
-    {
-        //printf("Searching... miss! \n");
-        cache->lines[block_address].valid = 1;
-        return 0;
+        return 1; // hit
     }
 
-    return 0; // placeholder
+    // otherwise it's a miss
+    cache->lines[index].valid = 1; // making sure it flips to indicate valid data being stored
+    cache->lines[index].tag = tag; // kicking out the value that was here last
+    return 0; // cache miss
 }
 
-/*
-* Frees allocated memory for the cache
-*/
+
+/// Frees allocated memory for the cache.
+/// @param cache Represents the cache in which memory is being deallocated.
 void free_cache(Cache* cache)
 {
     if (cache != NULL)
@@ -83,9 +64,10 @@ void free_cache(Cache* cache)
 }
 
 
-/*
-* Prints cache statistics
-*/
+/// Prints cache statistics.
+/// @param accesses Total number of queries made to the cache.
+/// @param hits Total number of successful queries.
+/// @param misses Total number of unsuccessful queries.
 void print_stats(int accesses, int hits, int misses)
 {
     double hit_rate = 0.0;

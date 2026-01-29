@@ -8,8 +8,8 @@ int main(int argc, char* argv[])
         printf("Usage: %s <cache_size> <block_size> <input_file>\n", argv[0]);
         return 1;
     }
-    int cache_size = atoi(argv[1]); // in bits
-    int block_size = atoi(argv[2]); // in bits
+    int cache_size = atoi(argv[1]); // in bytes
+    int block_size = atoi(argv[2]); // in bytes
 
     char* filename = argv[3];
     Cache* cache = create_cache(cache_size, block_size);
@@ -30,6 +30,7 @@ int main(int argc, char* argv[])
     int hits = 0;
     int misses = 0;
     /* Read memory addresses from file */
+    // TODO: Read hex + decimal input - currently will only read decimal values
     while (fscanf(fp, "%d", &address) == 1)
     {
         accesses++;
