@@ -20,6 +20,8 @@ Note: Cache size and block size can be changed, replace existing values with des
 Some operations performed taken from console output:
 
 ```
+-- Expected input with legal values --
+
 ./PA2 64 16 input_sequential.txt  
 Total memory accesses: 10
 Cache hits: 7
@@ -49,5 +51,27 @@ Total memory accesses: 8
 Cache hits: 6
 Cache misses: 2
 Cache hit rate: 75.00%
+
+-- Expected input with illegal values -- 
+
+./PA2 512 0 input_hex.txt        
+Invalid input, cache or block size cannot be less than or equal to 0.
+Error creating cache                                                                                                                                                      
+
+./PA2 64 128 input_sequential.txt 
+Invalid input, block size cannot be greater than cache size.
+Error creating cache                                                                                                                                          
+
+./PA2 512 -128 input_sequential.txt
+Invalid input, cache or block size cannot be less than or equal to 0.
+Error creating cache
+
+-- Corrupted/invalid input -- 
+
+./PA2 64 input_sequential.txt 
+Usage: ./PA2 <cache_size> <block_size> <input_file>
+
+./PA2 64 16 input_nonexistentFile.txt
+Error opening input file
 
 ```
