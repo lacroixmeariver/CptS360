@@ -30,8 +30,7 @@ int main(int argc, char* argv[])
     int hits = 0;
     int misses = 0;
     /* Read memory addresses from file */
-    // TODO: Read hex + decimal input - currently will only read decimal values
-    while (fscanf(fp, "%d", &address) == 1)
+    while (fscanf(fp, "%i", &address) == 1)
     {
         accesses++;
         if (access_cache(cache, address))

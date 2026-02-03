@@ -22,7 +22,7 @@ Cache* create_cache(int cache_size, int block_size)
 
     for (int i = 0; i < cache->num_lines; i++)
     {
-        cache->lines[i].tag = 0; // set to 0, new cache will be cold/empty
+        cache->lines[i].valid = 0; // set to 0, new cache will be cold/empty
     }
 
     return cache;
@@ -47,7 +47,7 @@ int access_cache(Cache* cache, unsigned int address)
 
     // otherwise it's a miss
     cache->lines[index].valid = 1; // making sure it flips to indicate valid data being stored
-    cache->lines[index].tag = tag; // kicking out the value that was here last
+    cache->lines[index].tag = tag; // storing/overriding the new tag being stored
     return 0; // cache miss
 }
 
