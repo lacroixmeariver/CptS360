@@ -15,6 +15,7 @@ Note: Cache size and block size can be changed, replace existing values with des
 - Input files contain addresses in either hexadecimal or decimal values
 - Each address corresponds to a single line in the input file
 - Given addresses are non-negative and fit within range defined by 32-bit unsigned integers
+- Cache size is evenly divisible by block size
 ## Example Input and Output
 Some operations performed taken from console output:
 

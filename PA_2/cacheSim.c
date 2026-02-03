@@ -4,8 +4,25 @@
 /// @param cache_size Represents the total cache size in bytes.
 /// @param block_size Represents the total size of stored block.
 /// @return Pointer to newly initialized cache.
-Cache* create_cache(int cache_size, int block_size)
+Cache* create_cache(const int cache_size, const int block_size)
 {
+    // input validation
+    if (block_size <= 0 || cache_size <= 0)
+    {
+        printf("Invalid input, cache or block size cannot be less than or equal to 0.\n");
+        return NULL;
+    }
+    if (block_size > cache_size)
+    {
+        printf("Invalid input, block size cannot be greater than cache size.\n");
+        return NULL;
+    }
+    if (cache_size % block_size != 0) // could possibly result in less memory available than user expects
+    {
+        printf("Invalid input, cache size must be evenly divisible by block size.\n");
+        return NULL;
+    }
+
     Cache* cache = (Cache*)malloc(sizeof(Cache));
     if (cache == NULL)
     {
@@ -13,6 +30,7 @@ Cache* create_cache(int cache_size, int block_size)
     }
     cache->block_size = block_size;
     cache->num_lines = cache_size / block_size;
+
     cache->lines = (CacheLine*)malloc(sizeof(CacheLine) * cache->num_lines);
     if (cache->lines == NULL)
     {
