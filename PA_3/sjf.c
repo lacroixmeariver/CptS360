@@ -3,22 +3,23 @@
 /* -----------------------------
 SJF Scheduling (Non-preemptive)
 -------------------------------- */
-void sjf(Process processes[], int n) {
 
-    // TODO:
-    // 1. While not all processes are completed:
-    // 2. Find the available process with the shortest burst time
-    // 3. Execute it fully and update completion_time
-    // 4. Handle CPU idle time if no process is available
+/// Executes processes in order of shortest job first
+/// @param processes Represents the array of processes
+/// @param n Represents the size (in elements) of the process array
+void sjf(Process processes[], const int n) {
 
-    quick_arrival_sort(processes, 0, n);
+    // TODO: Stress testing for unusual/edge cases to see if this thing will hold up
 
-    int current_time = processes[0].burst_time; // has no choice since it's non-preemptive
+    // preemptive: process doesn't stop to accommodate for shorter burst times
+    // once a process is in, it's getting executed till it's done
+
+    // take the first element in order of arrival and execute it
+    int current_time = processes[0].burst_time;
     print_gantt(processes[0].pid, 0, current_time);
-    processes[0].completion_time = current_time;
+    processes[0].completion_time = current_time; // setting the current time accordingly
 
-    // the processes come in sorted by time, all iterations represent the time
-    for (int i = 1; i < n; i++)
+    for (int i = 1; i < n; i++) // starting at the second index now
     {
         if (current_time < processes[i].arrival_time) {
             current_time = processes[i].arrival_time;
@@ -31,6 +32,5 @@ void sjf(Process processes[], int n) {
         print_gantt(processes[i].pid, start, end);
         processes[i].completion_time = end;
     }
-
 }
 
