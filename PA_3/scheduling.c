@@ -20,6 +20,9 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    // all processes get sorted by arrival on the way in as a precaution
+    quick_arrival_sort(processes, 0, n);
+
     printf("\n===== First-Come, First-Serve =====\n");
     reset_processes(processes, n);
     fcfs(processes, n);
