@@ -7,7 +7,6 @@
 
 #define MAX_PROCESSES 100
 
-
 /* -----------------------------
    Process structure
 -------------------------------- */
@@ -27,6 +26,12 @@ typedef struct {
 /* -----------------------------
    Function Prototypes
 -------------------------------- */
+void swap(Process processes[], int i, int j);
+void quick_arrival_sort(Process processes[], int low, int high);
+void quick_burst_sort(Process processes[], int low, int high);
+int arrival_partition(Process processes[], int low, int high);
+int burst_partition(Process processes[], int low, int high);
+
 int read_processes(const char* filename, Process processes[]);
 void reset_processes(Process processes[], int n);
 
