@@ -9,7 +9,7 @@ SJF Scheduling (Non-preemptive)
 /// @param processes Represents the array of processes
 /// @param n Represents the size (in elements) of the process array
 void sjf(Process processes[], const int n) {
-    // preemptive sjf: process doesn't stop to accommodate for shorter burst times as they come in
+    // non-preemptive sjf: process doesn't stop to accommodate for shorter burst times as they come in
     // once a process is in, it's getting executed till it's done
 
     int completed = 0;
