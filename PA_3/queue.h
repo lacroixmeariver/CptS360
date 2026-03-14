@@ -1,7 +1,7 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 #include "scheduling.h"
-#define MAX_QUEUE_SIZE 200
+#define MAX_QUEUE_SIZE 100
 
 // Defining structure of Queue
 typedef struct
@@ -19,5 +19,7 @@ void enqueue(Queue*, Process* data);
 Process* dequeue(Queue* queue);
 Process* peek(Queue* queue);
 int is_queued(Queue* queue, Process *target);
+void priorityQueueSort(Queue* queue);
+void printQueue(Queue* queue);
 
 #endif //QUEUE_H

@@ -60,11 +60,43 @@ int is_queued(Queue* queue, Process *target)
 {
     for (int i = queue->head; i < queue->head + queue->size; i++)
     {
-        if (queue->items[i]->pid == target->pid)
+        if (queue->items[i] == target)
         {
             return 1;
         }
     }
 
     return 0;
+}
+
+/// Sorts elements in the queue based on priority (in this case burst time)
+/// @param queue Represents queue being sorted
+void priorityQueueSort(Queue* queue)
+{
+    for (int i = queue->head + 1; i < queue->tail; i++)
+    {
+        Process* current = queue->items[i];
+
+        int j = i - 1;
+        for (; j >= queue->head && queue->items[j]->burst_time > current->burst_time; j--)
+        {
+            queue->items[j + 1] = queue->items[j];
+        }
+        queue->items[j + 1] = current;
+    }
+}
+
+/// Utility function to visualize queue in stdout
+/// @param queue Represents queue to be printed
+void printQueue(Queue* queue)
+{
+    if (queue->size == 0)
+    {
+        return;
+    }
+    for (int i = queue->head; i < queue->size + queue->head; i++)
+    {
+        printf("Element: %d PID: %d Arrival: %d Burst: %d \n",
+            i, queue->items[i]->pid, queue->items[i]->arrival_time, queue->items[i]->burst_time);
+    }
 }
