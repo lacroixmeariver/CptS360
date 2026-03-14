@@ -3,8 +3,11 @@
 /* -----------------------------
    FCFS Scheduling
 -------------------------------- */
-void fcfs(Process processes[], int n) {
 
+/// Executes processes in a FIFO order
+/// @param processes Represents the array of processes
+/// @param n Represents the size of process array
+void fcfs(Process processes[], int n) {
 
     int current_time = 0;
 
