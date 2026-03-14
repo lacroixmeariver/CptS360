@@ -20,7 +20,6 @@ typedef struct {
    int turnaround_time;
 } Process;
 
-
 /* -----------------------------
    Function Prototypes
 -------------------------------- */
@@ -44,7 +43,5 @@ void quick_arrival_sort(Process processes[], int low, int high);
 void quick_burst_sort(Process processes[], int low, int high);
 int arrival_partition(Process processes[], int low, int high);
 int burst_partition(Process processes[], int low, int high);
-
-
 
 #endif //SCHEDULING_H

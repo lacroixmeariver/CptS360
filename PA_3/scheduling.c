@@ -28,10 +28,14 @@ int main(int argc, char* argv[]) {
     fcfs(processes, n);
     print_metrics(processes, n);
 
+    quick_arrival_sort(processes, 0, n);
+
     printf("\n===== Shortest Job First =====\n");
     reset_processes(processes, n);
     sjf(processes, n);
     print_metrics(processes, n);
+
+    quick_arrival_sort(processes, 0, n);
 
     printf("\n===== Round Robin (q = %d) =====\n", quantum);
     reset_processes(processes, n);
